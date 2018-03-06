@@ -1,5 +1,7 @@
 class FeedsController < ApplicationController
+  require 'rss'
   def index
-    @feed = Feed.rss
+    url = "https://news.yahoo.co.jp/pickup/computer/rss.xml"
+    @feed = RSS::Parser.parse(url)
   end
 end
