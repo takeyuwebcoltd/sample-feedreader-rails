@@ -1,0 +1,10 @@
+<h3><strong><%= @feed.channel.title %></strong></h3>
+<h4><%= @feed.channel.description %></h4>
+
+<% @feed.channel.items.each do|item| %>
+  <p>
+    <%= item.title %><br>
+    <%= link_to item.link %><br>
+    <%= item.pubDate.strftime('%Y年%m月%d日 %H:%M') %> 
+  </p>
+<% end %>
