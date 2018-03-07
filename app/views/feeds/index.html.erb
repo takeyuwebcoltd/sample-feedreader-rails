@@ -2,8 +2,9 @@
 <h4><%= @feed.channel.description %></h4>
 
 <% @feed.channel.items.each do|item| %>
-  <p><%= item.title %></p>
-  <p><%= link_to item.link %></p>
-  <p><%= item.pubDate.strftime('%Y年%m月%d日 %H:%M') %></p>
-  <br>
+  <p>
+    <%= item.title %><br>
+    <%= link_to item.link %><br>
+    <%= item.pubDate.strftime('%Y年%m月%d日 %H:%M') %> 
+  </p>
 <% end %>
