@@ -3,8 +3,9 @@
 
 <% @feed.channel.items.each do|item| %>
   <p>
-    <%= item.title %><br>
-    <%= link_to item.link %><br>
-    <%= item.pubDate.strftime('%Y年%m月%d日 %H:%M') %> 
+    <%= link_to item.link do %>
+      <h4><strong><%= item.title %></strong></h4>
+    <% end %>
+    <%= time_ago_in_words(item.pubDate) %>前
   </p>
 <% end %>
