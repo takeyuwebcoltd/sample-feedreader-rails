@@ -1,9 +1,8 @@
 require 'rss'
-
+# https://news.yahoo.co.jp/pickup/computer/rss.xml
 class FeedsController < ApplicationController
   def index
-    url = Feed.find(1).url
-    @feed = RSS::Parser.parse(url)
+    @feed = Feed.channel
   end
 
   def new
@@ -11,8 +10,12 @@ class FeedsController < ApplicationController
   end
 
   def create
-    Feed.create(feed_params)
-    redirect_to feeds_path
+    @feed = Feed.new(feed_params)
+    if @feed.save
+      redirect_to feeds_path
+    else
+      render 'new'
+    end
   end
 
   private
