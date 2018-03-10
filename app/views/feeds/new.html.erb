@@ -1,15 +1,16 @@
+<% if @feed.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @feed.errors.count %>件のエラーがあります。</h2>
+    <ul>
+      <% @feed.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for(@feed) do |f| %>
-  <% if @feed.errors.any? %>
-      <div id = "error_explanation">
-        <h2><%= @feed.errors.count %>件のエラーがあります。</h2>
-        <ul>
-          <% @feed.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-  <% end %>
-  <%= f.label :登録フォーム %><br />
+  <%= f.label :url %><br />
   <%= f.text_field :url %>
   <%= f.submit "登録" %>
 <% end %>

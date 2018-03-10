@@ -2,7 +2,7 @@ require 'rss'
 # https://news.yahoo.co.jp/pickup/computer/rss.xml
 class FeedsController < ApplicationController
   def index
-    @feed = Feed.channel
+    @channel = Feed.channel
   end
 
   def new
