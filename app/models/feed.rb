@@ -1,15 +1,7 @@
 class Feed < ApplicationRecord
-  validates :url, presence: true
-
-  #def self.channel
-    #rss = RSS::Parser.parse(first.url)
-    #rss.channel
-  #end
+  validates :url, format: /\A#{URI::regexp(%w(http https))}\z/, presence: true
 
   def self.channels
-    all.map do |feed|
-      rss = RSS::Parser.parse(feed.url)
-      rss.channel
-    end
+    all.map { |feed| RSS::Parser.parse(feed.url).channel }
   end
 end

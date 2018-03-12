@@ -1,17 +1,3 @@
-<!--
-<h3><strong><%#= @channel.title %></strong></h3>
-<h4><%#= @channel.description %></h4>
-
-<%# @channel.items.each do |item| %>
-  <p>
-    <%#= link_to item.link do %>
-      <h4><strong><%#= item.title %></strong></h4>
-    <%# end %>
-    <%#= time_ago_in_words(item.pubDate) %>前
-  </p>
-<%# end %>
--->
-
 <% @channels.each do |channel| %>
   <h3><strong><%= channel.title %></strong></h3>
   <h4><%= channel.description %><h4>
