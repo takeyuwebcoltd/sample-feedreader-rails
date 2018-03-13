@@ -2,17 +2,17 @@ require 'test_helper'
 
 class FeedTest < ActiveSupport::TestCase
   def feed_true
-    @feed ||= Feed.new(
+    @feed_true ||= Feed.new(
     url: "https://rss-weather.yahoo.co.jp/rss/days/7320.xml"
     )
 
   end
 
   def feed_false
-    @feed ||= Feed.new(
+    @feed_false ||= Feed.new(
     url: "javascript:alert('XSS');//http://shiraishi.jp/"
     )
-    @feed_blank ||= Feed.new(
+    @feed_false ||= Feed.new(
     url: ""
     )
   end
