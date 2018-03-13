@@ -1,11 +1,12 @@
-<h3><strong><%= @feed.channel.title %></strong></h3>
-<h4><%= @feed.channel.description %></h4>
-
-<% @feed.channel.items.each do|item| %>
-  <p>
-    <%= link_to item.link do %>
-      <h4><strong><%= item.title %></strong></h4>
-    <% end %>
-    <%= time_ago_in_words(item.pubDate) %>前
-  </p>
+<% @channels.each do |channel| %>
+  <h3><strong><%= channel.title %></strong></h3>
+  <h4><%= channel.description %><h4>
+  <% channel.items.each do |item| %>
+    <p>
+      <%= link_to item.link do %>
+        <h4><strong><%= item.title %></strong></h4>
+      <% end %>
+      <%= time_ago_in_words(item.pubDate) %>前
+    </p>
+  <% end %>
 <% end %>
