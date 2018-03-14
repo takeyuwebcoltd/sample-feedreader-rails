@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: ruby 2.5.0p0
       - image: psql:9.6.5
-      environment:
+        environment:
           POSTGRES_USER: sample-feedreader-rails
           POSTGRES_DB: sample-feedreader-rails_test
     environment:
