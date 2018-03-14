@@ -4,8 +4,8 @@ jobs:
     parallelism: 3
     working_directory: /sample-feedreader-rails
     docker:
-      - image: circleci/ruby 2.5.0
-      - image: psql:9.6.5
+      - image: circleci/ruby:2.5.0
+      - image: circleci/psql:9.6.5
         environment:
           POSTGRES_USER: sample-feedreader-rails
           POSTGRES_DB: sample-feedreader-rails_test
