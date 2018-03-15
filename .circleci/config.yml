@@ -1,16 +1,17 @@
 version: 2
 jobs:
   build:
-    parallelism: 3
-    working_directory: /sample-feedreader-rails
+    working_directory: ~/sample-feedreader-rails
     docker:
-      - image: circleci/ruby:2.5.0
+      - image: circleci/ruby:2.5.0-node
       - image: circleci/postgres:9.6-alpine
         environment:
-          POSTGRES_USER: sample-feedreader-rails
-          POSTGRES_DB: sample-feedreader-rails_test
+          POSTGRES_DB: feedreader-rails_test
+          POSTGRES_USER: postgres
+          POSTGERS_PASSWORD:
     environment:
       TZ: /usr/share/zoneinfo/Asia/Tokyo
+      RAILS_ENV: test
     steps:
       - checkout
       # Download and cache dependencies
@@ -28,11 +29,8 @@ jobs:
             - ./vendor/bundle
           key: sample-feedreader-rails-{{ checksum "Gemfile.lock" }}
       # Database setup
+      - run: cp config/database.ci.yml config/database.yml
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
       # run tests!
-      - run:
-          name: run tests
-          command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+      - run: bundle exec rake
