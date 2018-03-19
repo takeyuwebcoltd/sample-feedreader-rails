@@ -21,6 +21,7 @@ class FeedsController < ApplicationController
 
   private
   def feed_params
-    params.require(:feed).permit(:url)
+    params.require(:feed).permit(:url, channel_attributes: [:channel_title, :description, :item_title, :link, :pubdate, :feed_id, :id])
   end
+
 end

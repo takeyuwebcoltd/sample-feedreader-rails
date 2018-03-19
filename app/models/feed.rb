@@ -1,4 +1,7 @@
 class Feed < ApplicationRecord
+  has_one :channel
+  accepts_nested_attributes_for :channel
+
   validates :url, format: /\A#{URI::regexp(%w(http https))}\z/
 
   def self.channels
