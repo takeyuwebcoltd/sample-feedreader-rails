@@ -21,9 +21,10 @@ ActiveRecord::Schema.define(version: 2018_03_17_100730) do
     t.string "item_title"
     t.string "link"
     t.datetime "pubdate"
-    t.integer "feed_id"
+    t.bigint "feed_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["feed_id"], name: "index_channels_on_feed_id"
   end
 
   create_table "feeds", force: :cascade do |t|
@@ -32,4 +33,5 @@ ActiveRecord::Schema.define(version: 2018_03_17_100730) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "channels", "feeds"
 end

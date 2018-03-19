@@ -6,7 +6,7 @@ class CreateChannels < ActiveRecord::Migration[5.2]
       t.string :item_title
       t.string :link
       t.datetime :pubdate
-      t.integer :feed_id
+      t.references :feed, foreign_key: true, null: false
 
       t.timestamps
     end
