@@ -21,7 +21,7 @@ class ChannelsController < ApplicationController
 
   private
   def channel_params
-    params.require(:channel).permit(:url, :title, :description, items_attributes: [:title, :link, :pubdate])
+    params.require(:channel).permit(:url)
   end
 
 end
