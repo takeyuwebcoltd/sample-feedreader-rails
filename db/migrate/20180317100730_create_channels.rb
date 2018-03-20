@@ -1,12 +1,10 @@
 class CreateChannels < ActiveRecord::Migration[5.2]
   def change
     create_table :channels do |t|
-      t.string :channel_title
-      t.string :description
-      t.string :item_title
+      t.string :title
       t.string :link
       t.datetime :pubdate
-      t.references :feed, foreign_key: true, null: false
+      t.references :channel, foreign_key: true, null: false
 
       t.timestamps
     end

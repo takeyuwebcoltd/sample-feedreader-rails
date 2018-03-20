@@ -10,28 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_03_17_100730) do
+ActiveRecord::Schema.define(version: 2018_03_20_021944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "channels", force: :cascade do |t|
-    t.string "channel_title"
+    t.string "url", default: "", null: false, comment: "RSSフィードのURL"
+    t.string "title"
     t.string "description"
-    t.string "item_title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "title"
     t.string "link"
     t.datetime "pubdate"
-    t.bigint "feed_id", null: false
+    t.bigint "channel_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["feed_id"], name: "index_channels_on_feed_id"
+    t.index ["channel_id"], name: "index_items_on_channel_id"
   end
 
-  create_table "feeds", force: :cascade do |t|
-    t.string "url", default: "", null: false, comment: "RSSフィードのURL"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_foreign_key "channels", "feeds"
+  add_foreign_key "items", "items", column: "channel_id"
 end

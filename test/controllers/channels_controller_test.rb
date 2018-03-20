@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FeedsControllerTest < ActionDispatch::IntegrationTest
+class ChannelsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
