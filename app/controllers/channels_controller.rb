@@ -3,7 +3,7 @@ require 'rss'
 # https://rss-weather.yahoo.co.jp/rss/days/7320.xml
 class ChannelsController < ApplicationController
   def index
-    @channels = Channel.channels
+    @channels = Channel.all
   end
 
   def new
@@ -17,6 +17,24 @@ class ChannelsController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def fetch_items
+    @channels = Channel.channels
+    @channel = Channel.find(params[:channel_id])
+
+    @channels.each do |channel|
+      unless Channel.exists?(:title => channel.title, :description => channel.description)
+        @channel.update(title: channel.title, description: channel.description)
+      end
+      channel.items.each do |fetch|
+        item = @channel.items.build
+        unless Item.exists?(:title => fetch.title, :link => fetch.link, :pubdate => fetch.pubDate)
+          item.update(title: fetch.title, link: fetch.link, pubdate: fetch.pubDate)
+        end
+      end
+    end
+    redirect_to channels_path
   end
 
   private
