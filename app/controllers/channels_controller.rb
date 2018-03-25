@@ -20,18 +20,14 @@ class ChannelsController < ApplicationController
   end
 
   def fetch_items
-    @channels = Channel.channels
     @channel = Channel.find(params[:channel_id])
+    channel = RSS::Parser.parse(@channel.url).channel
+    @channel.update(title: channel.title, description: channel.description)
 
-    @channels.each do |channel|
-      unless Channel.exists?(:title => channel.title, :description => channel.description)
-        @channel.update(title: channel.title, description: channel.description)
-      end
-      channel.items.each do |fetch|
-        item = @channel.items.build
-        unless Item.exists?(:title => fetch.title, :link => fetch.link, :pubdate => fetch.pubDate)
-          item.update(title: fetch.title, link: fetch.link, pubdate: fetch.pubDate)
-        end
+    channel.items.each do |fetch|
+    item = @channel.items.build
+      unless Item.exists?(title: fetch.title, link: fetch.link, pubdate: fetch.pubDate)
+        item.update(title: fetch.title, link: fetch.link, pubdate: fetch.pubDate)
       end
     end
     redirect_to channels_path
