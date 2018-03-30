@@ -26,14 +26,12 @@ class ChannelsController < ApplicationController
     channel.assign_attributes(title: source_channel.title, description: source_channel.description)
     channel.save if channel.changed?
 
-    if channel.items.last
-      item = channel.items.order(:pubdate).last
+    if channel.items.first
+      items = Array(channel.items.order("pubdate DESC"))
       source_items = source_channel.items.sort!{ |a,b| b.date <=> a.date }
-      source_item = source_items.first
-      item.title = source_item.title
-      #item.assign_attributes(title: source_item.title, link: source_item.link, pubdate: sou  rce_item.pubDate)
-      if item.changed?
-        source_channel.items.each do |source_item|
+      items.zip(source_items).each do |item, source_item|
+        item.assign_attributes(title: source_item.title, link: source_item.link, pubdate: source_item.pubDate)
+        if item.changed?
           item.update(title: source_item.title, link: source_item.link, pubdate: source_item.pubDate)
         end
       end
