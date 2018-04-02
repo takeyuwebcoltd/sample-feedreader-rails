@@ -6,5 +6,5 @@ class Channel < ApplicationRecord
   #def self.channels
     #all.map { |channel| RSS::Parser.parse(channel.url).channel }
   #end
-  
+
 end

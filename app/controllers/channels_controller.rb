@@ -24,20 +24,17 @@ class ChannelsController < ApplicationController
     source_channel = RSS::Parser.parse(channel.url).channel
 
     channel.assign_attributes(title: source_channel.title, description: source_channel.description)
-    channel.save if channel.changed?
+    if channel.changed?
+      channel.update(title: source_channel.title, description: source_channel.description)
+    end
 
-    if channel.items.first
-      items = Array(channel.items.order("pubdate DESC"))
-      source_items = source_channel.items.sort!{ |a,b| b.date <=> a.date }
-      items.zip(source_items).each do |item, source_item|
-        item.assign_attributes(title: source_item.title, link: source_item.link, pubdate: source_item.pubDate)
-        if item.changed?
-          item.update(title: source_item.title, link: source_item.link, pubdate: source_item.pubDate)
-        end
-      end
-    else
-      source_channel.items.each do |source_item|
-        channel.items.create(title: source_item.title, link: source_item.link, pubdate: source_item.pubDate)
+    items = Array(channel.items.order("pubdate DESC"))
+    source_items = source_channel.items.sort!{ |a,b| b.date <=> a.date }
+    source_items.zip(items).each do |source_item, item|
+      item = channel.items.build  unless item
+      item.assign_attributes(title: source_item.title, link: source_item.link, pubdate: source_item.pubDate)
+      if item.changed?
+        item.save(title: source_item.title, link: source_item.link, pubdate: source_item.pubDate)
       end
     end
     redirect_to channels_path
