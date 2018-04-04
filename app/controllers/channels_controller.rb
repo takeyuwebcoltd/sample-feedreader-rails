@@ -23,7 +23,7 @@ class ChannelsController < ApplicationController
 
   def fetch_items
     channel_id = params[:channel_id]
-    Channel.channel_item_save(channel_id)
+    Channel.items_save(channel_id)
     redirect_to channels_path
   end
 
