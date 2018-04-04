@@ -17,21 +17,13 @@ class ChannelsController < ApplicationController
     else
       render 'new'
     end
+    channel_id = @channel.id
+    Channel.channel_item_save(channel_id)
   end
 
   def fetch_items
-    channel = Channel.find(params[:channel_id])
-    source_channel = RSS::Parser.parse(channel.url).channel
-
-    channel.assign_attributes(title: source_channel.title, description: source_channel.description)
-    channel.save if channel.changed?
-
-    items = channel.items
-    source_channel.items.each do |source_item|
-      item = items.find_or_initialize_by(title: source_item.title)
-      item.assign_attributes(link: source_item.link, pubdate: source_item.pubDate)
-      item.save if item.changed?
-    end
+    channel_id = params[:channel_id]
+    Channel.channel_item_save(channel_id)
     redirect_to channels_path
   end
 
