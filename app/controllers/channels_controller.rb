@@ -18,7 +18,7 @@ class ChannelsController < ApplicationController
       render 'new'
     end
     channel_id = @channel.id
-    Channel.channel_item_save(channel_id)
+    Channel.items_save(channel_id)
   end
 
   def fetch_items
