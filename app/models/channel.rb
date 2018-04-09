@@ -3,8 +3,7 @@ class Channel < ApplicationRecord
   has_many :items, dependent: :destroy
   validates :url, format: /\A#{URI::regexp(%w(http https))}\z/
 
-  def items_save(channel_id)
-    channel = Channel.find(channel_id)
+  def items_save(channel)
     source_channel = RSS::Parser.parse(channel.url).channel
     channel.assign_attributes(title: source_channel.title, description: source_channel.description)
     channel.save if channel.changed?
