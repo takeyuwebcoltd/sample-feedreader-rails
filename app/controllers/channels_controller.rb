@@ -14,7 +14,7 @@ class ChannelsController < ApplicationController
   def create
     @channel = Channel.new(channel_params)
     if @channel.save
-      @channel.items_save
+      @channel.update_items
       redirect_to channels_path
     else
       render 'new'
@@ -23,7 +23,7 @@ class ChannelsController < ApplicationController
 
   def fetch_items
     channel = Channel.find(params[:channel_id])
-    channel.items_save
+    channel.update_items
     redirect_to channels_path
   end
 
