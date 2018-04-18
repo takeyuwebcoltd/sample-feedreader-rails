@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  resources :feeds, only: [:index, :new, :create]
+  resources :channels, only: [:index, :new, :create] do
+    get 'fetch_items'
+  end
 end

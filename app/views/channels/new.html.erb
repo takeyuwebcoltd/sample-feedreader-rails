@@ -1,15 +1,15 @@
-<% if @feed.errors.any? %>
+<% if @channel.errors.any? %>
   <div id="error_explanation">
-    <h2><%= @feed.errors.count %>件のエラーがあります。</h2>
+    <h2><%= @channel.errors.count %>件のエラーがあります。</h2>
     <ul>
-      <% @feed.errors.full_messages.each do |msg| %>
+      <% @channel.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
 
-<%= form_for(@feed) do |f| %>
+<%= form_for(@channel) do |f| %>
   <%= f.label :url %><br />
   <%= f.text_field :url %>
   <%= f.submit "登録" %>
